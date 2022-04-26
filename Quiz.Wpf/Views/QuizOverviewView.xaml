@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Quiz.Wpf.Views.QuizOverviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Quiz.Wpf.Views"
+             mc:Ignorable="d"
+             Height="600" Width="860"
+             x:Name="QuizControl">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100px"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Konfiguracja quizu" FontSize="26" Margin="0 5 0 0" />
+            <TextBox Grid.Column="0" Grid.Row="1" Height="26px" Text="{Binding QuizVM.Name}"/>
+            <Button Grid.RowSpan="2" Grid.Column="1" Grid.Row="0" Width="200px" FontSize="26" HorizontalAlignment="Right" Command="{Binding AddQuestionCommand}">Dodaj pytanie</Button>
+        </Grid>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding QuizVM.Questions}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command="{Binding DataContext.QuizVM.EditQuestionCommand, ElementName=QuizControl}" CommandParameter="{Binding}">Edytuj</Button>
+                            <Button Command="{Binding DataContext.QuizVM.DeleteQuestionCommand, ElementName=QuizControl}" CommandParameter="{Binding}">Usuń</Button>
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Text="{Binding TextWithOrderNumber}"></TextBlock>
+                        <ItemsControl Grid.Row="2" ItemsSource="{Binding Answers}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50px"/>
+                                            <ColumnDefinition Width="50px"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox IsEnabled="False" IsChecked="{Binding IsCorrect}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding OrderLetter}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Text}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>
