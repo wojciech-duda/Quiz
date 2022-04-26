@@ -27,7 +27,7 @@ public class QuizFileSerializer : IQuizFileSerializer
         _encrypter = encrypter ?? throw new ArgumentNullException(nameof(encrypter));
     }
 
-    public async Task SaveToFileAsync(Domain.Models.Quiz quiz, string path)
+    public async Task<string> SaveToFileAsync(Domain.Models.Quiz quiz, string path)
     {
         var filePath = Path.Combine(path, $"{quiz.Name}.txt");
         if (File.Exists(filePath))
@@ -48,6 +48,8 @@ public class QuizFileSerializer : IQuizFileSerializer
 
             await file.WriteLineAsync();
         }
+
+        return filePath;
     }
 
     public async Task<Domain.Models.Quiz> ReadFromFileAsync(string path)

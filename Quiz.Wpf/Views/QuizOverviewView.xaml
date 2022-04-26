@@ -23,7 +23,11 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="Konfiguracja quizu" FontSize="26" Margin="0 5 0 0" />
             <TextBox Grid.Column="0" Grid.Row="1" Height="26px" Text="{Binding QuizVM.Name}"/>
-            <Button Grid.RowSpan="2" Grid.Column="1" Grid.Row="0" Width="200px" FontSize="26" HorizontalAlignment="Right" Command="{Binding AddQuestionCommand}">Dodaj pytanie</Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.RowSpan="2" Grid.Column="1" Grid.Row="0">
+                <Button Margin="5 0" Width="200px" FontSize="26" Command="{Binding SaveToFileCommand}">Zapisz</Button>
+                <Button Margin="5 0" Width="200px" FontSize="26" Command="{Binding AddQuestionCommand}">Dodaj pytanie</Button>
+                
+            </StackPanel>
         </Grid>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding QuizVM.Questions}">
             <ItemsControl.ItemTemplate>
